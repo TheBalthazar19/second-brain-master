@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 import { db } from '../lib/db'
 
 export class AuthService {

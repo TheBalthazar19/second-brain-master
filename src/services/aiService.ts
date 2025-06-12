@@ -46,7 +46,9 @@ Instructions:
         maxTokens: 1000,
       })
 
-      const response = completion.choices[0]?.message?.content || 'I apologize, but I was unable to generate a response.'
+      const response = Array.isArray(completion.choices[0]?.message?.content)
+        ? completion.choices[0]?.message?.content.join(' ') // Convert array to string
+        : completion.choices[0]?.message?.content || 'I apologize, but I was unable to generate a response.'
 
       // Format references
       const references = memories
@@ -91,7 +93,11 @@ Create a well-organized summary that:
         maxTokens: 1500,
       })
 
-      return completion.choices[0]?.message?.content || 'Unable to generate summary.'
+      const content = Array.isArray(completion.choices[0]?.message?.content)
+        ? completion.choices[0]?.message?.content.join(' ') // Convert array to string
+        : completion.choices[0]?.message?.content;
+
+      return content || 'Unable to generate summary.';
     } catch (error) {
       console.error('Summarization error:', error)
       return 'Error generating summary. Please try again.'

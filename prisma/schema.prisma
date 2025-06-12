@@ -1,10 +1,10 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -71,7 +71,7 @@ model ChatMessage {
   content       String
   references    String[] @default([]) // Memory IDs referenced
   createdAt     DateTime @default(now())
-  
+  updatedAt     DateTime  @updatedAt
   session       ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   
   @@index([sessionId])

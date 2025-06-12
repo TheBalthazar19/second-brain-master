@@ -22,7 +22,7 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
     const result = await authService.register(email, password, name)
     return c.json(result, 201)
   } catch (error) {
-    return c.json({ error: error.message }, 400)
+    return c.json({ error: (error instanceof Error ? error.message : 'Unknown error') }, 400)
   }
 })
 
@@ -32,7 +32,7 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
     const result = await authService.login(email, password)
     return c.json(result)
   } catch (error) {
-    return c.json({ error: error.message }, 401)
+    return c.json({ error: (error instanceof Error ? error.message : 'Unknown error') }, 401)
   }
 })
 
